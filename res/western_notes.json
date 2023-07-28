@@ -4,26 +4,28 @@
       "minor_scale_natural": "A B C D E F G A",
       "minor_scale_melodic_ascending": "A B C D E F# G# A",
       "minor_scale_melodic_descending":"A G F E D C B A",
-      "minor_scale_harmonic":"A B C D E F G# A",
+      "minor_scale_harmonic_ascending":"A B C D E F G# A",
+      "minor_scale_harmonic_descending":"A G F E D C B A",
       "major_chord": "A C# E",
       "minor_chord": "A C E"
     },
     "A#": {
-      "major_scale": "A B C# D E F# G# A",
-      "minor_scale_natural": "A B C D E F G A",
+      "major_scale": "A# C D D# F G A A#",
+      "minor_scale_natural": "A# C C# D# F F# G# A#",
       "minor_scale_melodic_ascending": "A# C C# D# F G A A#",
       "minor_scale_melodic_descending":"A# G# F# F D# C# C A#",
       "minor_scale_harmonic_ascending":"C# D# E F# G# A C C#",
-      "minor_scale_harmonic":"A# C C# D# F F# A A#",
-      "major_chord": "A C# E",
-      "minor_chord": "A C E"
+      "minor_scale_harmonic_descending":"A# C C# D# F F# A A#",
+      "major_chord": "A# Cx E#",
+      "minor_chord": "A# C# E"
     },
     "B": {
       "major_scale": "B C# D# E F# G# A# B",
       "minor_scale_natural": "B C# D E F# G A B",
       "minor_scale_melodic_ascending": "B C# D E F# G# A# B",
       "minor_scale_melodic_descending":"B A G F# E D C# B",
-      "minor_scale_harmonic":"B C# D E F# G A# B",
+      "minor_scale_harmonic_ascending":"B C# D E F# G A# B",
+      "minor_scale_harmonic_descending":"B A G F# E D C# B",
       "major_chord": "B D# F#",
       "minor_chord": "B D F#"
     },
@@ -32,48 +34,48 @@
       "minor_scale_natural": "C D D# F G G# A# C",
       "minor_scale_melodic_ascending": "C D D# F G A B C",
       "minor_scale_melodic_descending":"C Bb A G F E D C",
-      "minor_scale_harmonic_ascending":"C - D - Eb - F - G - Ab - B - C",
-      "minor_scale_harmonic_descending":"C - Bb - Ab - G - F - Eb - D - C",
+      "minor_scale_harmonic_ascending":"C D Eb F G Ab B C",
+      "minor_scale_harmonic_descending":"C Bb Ab G F Eb D C",
       "major_chord": "C E G",
       "minor_chord": "C D# G"
     },
     "C#": {
-      "major_scale": "A B C# D E F# G# A",
-      "minor_scale_natural": "A B C D E F G A",
+      "major_scale": "C# D# F F# G# A# C C#",
+      "minor_scale_natural": "C# D# E F# G# A B C#",
       "minor_scale_melodic_ascending": "C# D# E F# G# A# C C#",
       "minor_scale_melodic_descending":"C# B A G# F# E D# C#",
-      "minor_scale_harmonic_ascending":"C# - D# - E - F# - G# - A - B# - C#",
-      "minor_scale_harmonic_descending":"C# - B - A - G# - F# - E - D# - C#",
-      "major_chord": "A C# E",
-      "minor_chord": "A C E"
+      "minor_scale_harmonic_ascending":"C# D# E F# G# A B# C#",
+      "minor_scale_harmonic_descending":"C# B A G# F# E D# C#",
+      "major_chord": "C# E# G#",
+      "minor_chord": "C# E G#"
     },
     "D": {
       "major_scale": "D E F# G A B C# D",
       "minor_scale_natural": "D E F G A A# C D",
       "minor_scale_melodic_ascending": "D E F G A B C# D",
       "minor_scale_melodic_descending":"D C Bb A G F E D",
-      "minor_scale_harmonic_ascending":"D - E - F - G - A - Bb - C# - D",
-      "minor_scale_harmonic_descending":"D - C - Bb - A - G - F - E - D",
+      "minor_scale_harmonic_ascending":"D E F G A Bb C# D",
+      "minor_scale_harmonic_descending":"D C Bb A G F E D",
       "major_chord": "D F# A",
       "minor_chord": "D F A"
     },
     "D#": {
-      "major_scale": "A B C# D E F# G# A",
-      "minor_scale_natural": "A B C D E F G A",
+      "major_scale": "D# F G G# A# C D D#",
+      "minor_scale_natural": "D# F F# G# A# B C# D#",
       "minor_scale_melodic_ascending": "D# F F# G# A# C D D#",
       "minor_scale_melodic_descending":"D# C# B A# G# F# F D#",
-      "minor_scale_harmonic_ascending":"Eb - F - Gb - Ab - Bb - C - D# - Eb",
-      "minor_scale_harmonic":"Eb - Db - C - Bb - Ab - Gb - F - Eb",
-      "major_chord": "A C# E",
-      "minor_chord": "A C E"
+      "minor_scale_harmonic_ascending":"Eb F Gb Ab Bb C D# Eb",
+      "minor_scale_harmonic_descending":"Eb Db C Bb Ab Gb F Eb",
+      "major_chord": "D# Fx A#",
+      "minor_chord": "D# F# A#"
     },
     "E": {
       "major_scale": "E F# G# A B C# D# E",
       "minor_scale_natural": "E F# G A B C D E",
       "minor_scale_melodic_ascending": "E F# G A B C# D# E",
       "minor_scale_melodic_descending":"E D C B A G F# E",
-      "minor_scale_harmonic_ascending":"E - F# - G - A - B - C - D# - E",
-      "minor_scale_harmonic_descending":"E - D - C - B - A - G - F# - E",
+      "minor_scale_harmonic_ascending":"E F# G A B C D# E",
+      "minor_scale_harmonic_descending":"E D C B A G F# E",
       "major_chord": "E G# B",
       "minor_chord": "E G B"
     },
@@ -82,39 +84,89 @@
       "minor_scale_natural": "F G G# A# C C# D# F",
       "minor_scale_melodic_ascending": "F G G# A# C D E F",
       "minor_scale_melodic_descending":"F Eb D C Bb A G F",
-      "minor_scale_harmonic_ascending":"F - G - Ab - Bb - C - Db - E - F",
-      "minor_scale_harmonic":"F - Eb - Db - C - Bb - Ab - G - F",
+      "minor_scale_harmonic_ascending":"F G Ab Bb C Db E F",
+      "minor_scale_harmonic_descending":"F Eb Db C Bb Ab G F",
       "major_chord": "F A C",
       "minor_chord": "F G# C"
     },
     "F#": {
-      "major_scale": "A B C# D E F# G# A",
-      "minor_scale_natural": "A B C D E F G A",
+      "major_scale": "F# G# A# B C# D# F F#",
+      "minor_scale_natural": "F# G# A B C# D E F#",
       "minor_scale_melodic_ascending": "F# G# A B C# D# F F#",
       "minor_scale_melodic_descending":"F# E D C# B A G F#",
-      "minor_scale_harmonic_ascending":"F# - G# - A - B - C# - D - E# - F#",
-      "minor_scale_harmonic_descending":"F# - E - D - C# - B - A - G# - F#",
-      "major_chord": "A C# E",
-      "minor_chord": "A C E"
+      "minor_scale_harmonic_ascending":"F# G# A B C# D E# F#",
+      "minor_scale_harmonic_descending":"F# E D C# B A G# F#",
+      "major_chord": "F# A# C#",
+      "minor_chord": "F# A C#"
     },
     "G": {
       "major_scale": "G A B C D E F# G",
       "minor_scale_natural": "G A A# C D D# F G",
       "minor_scale_melodic_ascending": "G A A# C D E F# G",
       "minor_scale_melodic_descending":"G F Eb D C Bb A G",
-      "minor_scale_harmonic_ascending":"G - A - Bb - C - D - Eb - F# - G",
-      "minor_scale_harmonic_descending":"G - F - Eb - D - C - Bb - A - G",
+      "minor_scale_harmonic_ascending":"G A Bb C D Eb F# G",
+      "minor_scale_harmonic_descending":"G F Eb D C Bb A G",
       "major_chord": "G B D",
       "minor_chord": "G A# D"
     },
     "G#": {
-      "major_scale": "A B C# D E F# G# A",
-      "minor_scale_natural": "A B C D E F G A",
+      "major_scale": "G# A# C C# D# F G G#",
+      "minor_scale_natural": "G# A# B C# D# E F# G#",
       "minor_scale_melodic_ascending": "G# A# B C# D# F G G#",
       "minor_scale_melodic_descending":"G# F# F D# D C B G#",
-      "minor_scale_harmonic_ascending":"G# - Bb - Cb - Db - Eb - F - G# - Ab",
-      "minor_scale_harmonic_descending":"G# - Gb - F - Eb - Db - Cb - Bb - Ab",
-      "major_chord": "A C# E",
-      "minor_chord": "A C E"
+      "minor_scale_harmonic_ascending":"G# Bb Cb Db Eb F G# Ab",
+      "minor_scale_harmonic_descending":"G# Gb F Eb Db Cb Bb Ab",
+      "major_chord": "G# B# D#",
+      "minor_chord": "G# B D#"
+    },
+    "Db": {
+      "major_scale": "Db D# F F# G# A# C C#",
+      "minor_scale_natural": "Db D# E F# G# A B C#",
+      "minor_scale_melodic_ascending": "Db D# E F# G# A# C C#",
+      "minor_scale_melodic_descending":"Db B A G# F# E D# C#",
+      "minor_scale_harmonic_ascending":"Db D# E F# G# A B# C#",
+      "minor_scale_harmonic_descending":"Db B A G# F# E D# C#",
+      "major_chord": "Db E# G#",
+      "minor_chord": "Db E G#"
+    },
+    "Eb": {
+      "major_scale": "Eb F G G# A# C D D#",
+      "minor_scale_natural": "Eb F F# G# A# B C# D#",
+      "minor_scale_melodic_ascending": "Eb F F# G# A# C D D#",
+      "minor_scale_melodic_descending":"Eb C# B A# G# F# F D#",
+      "minor_scale_harmonic_ascending":"Eb F Gb Ab Bb C D# Eb",
+      "minor_scale_harmonic_descending":"Eb Db C Bb Ab Gb F Eb",
+      "major_chord": "Eb Fx A#",
+      "minor_chord": "Eb F# A#"
+    },
+    "Bb": {
+      "major_scale": "Bb C D D# F G A A#",
+      "minor_scale_natural": "Bb C C# D# F F# G# A#",
+      "minor_scale_melodic_ascending": "Bb C C# D# F G A A#",
+      "minor_scale_melodic_descending":"Bb G# F# F D# C# C A#",
+      "minor_scale_harmonic_ascending":"C# D# E F# G# A C C#",
+      "minor_scale_harmonic_descending":"Bb C C# D# F F# A A#",
+      "major_chord": "Bb Cx E#",
+      "minor_chord": "Bb C# E"
+    },
+    "Gb": {
+      "major_scale": "Gb G# A# B C# D# F F#",
+      "minor_scale_natural": "Gb G# A B C# D E F#",
+      "minor_scale_melodic_ascending": "Gb G# A B C# D# F F#",
+      "minor_scale_melodic_descending":"Gb E D C# B A G F#",
+      "minor_scale_harmonic_ascending":"Gb G# A B C# D E# F#",
+      "minor_scale_harmonic_descending":"Gb E D C# B A G# F#",
+      "major_chord": "Gb A# C#",
+      "minor_chord": "Gb A C#"
+    },
+    "Ab": {
+      "major_scale": "Ab A# C C# D# F G G#",
+      "minor_scale_natural": "Ab A# B C# D# E F# G#",
+      "minor_scale_melodic_ascending": "Ab A# B C# D# F G G#",
+      "minor_scale_melodic_descending":"Ab F# F D# D C B G#",
+      "minor_scale_harmonic_ascending":"Ab Bb Cb Db Eb F G# Ab",
+      "minor_scale_harmonic_descending":"Ab Gb F Eb Db Cb Bb Ab",
+      "major_chord": "Ab A# D#",
+      "minor_chord": "Ab B D#"
     }
   }

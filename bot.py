@@ -60,7 +60,7 @@ def get_user_step(uid):
         print("New user detected")
         return 0
     
-#console output
+#console output-print new user data in console
 def listener(messages):
 	for m in messages:
 		if m.content_type == 'text':
@@ -72,34 +72,34 @@ bot.set_update_listener(listener)
 #show all available commands
 @bot.message_handler(commands=['all'])
 def command_all(m):
-    #print('commands')
     text = "All available commands :\n"
     for key in commands:
         text += "🔸 /" + key + " : "
         text += commands[key] + "\n\n"
     bot.send_message(m.chat.id,text)
+
+#show about    
 @bot.message_handler(commands=['about'])
 def handle_start_help(m):
-    print('about')
     bot.send_chat_action(m.chat.id,'typing')
-    note = "Rhythm is a chatbot designed to assist users in finding Carnatic ragas easily."
-    note += "It was created out of a love and passion for both music and coding." 
+    note = "`Rhythm` is a chatbot designed to assist users in finding `Western(Scales and Chords)` & `Carnatic(Ragas and Swaras)` easily."
+    note += "It was created out of a love and passion for both `music` and `coding`." 
     note += "If you encounter any issues or have suggestions for improvements,"
     note += "please type /source for navigate to source code in github.\n"
-    note += "This project is inspired from https://github.com/lpadukana/karnatic-music"
-    bot.send_message(m.chat.id,note)
+    note += "This project is inspired from [lpadukana/karnatic-music](https://github.com/lpadukana/karnatic-music) project"
+    bot.send_message(m.chat.id,note,parse_mode='Markdown')
 
+#show source
 @bot.message_handler(commands=['source'])
 def handle_start_help(m):
-        print('source')
         bot.send_chat_action(m.chat.id,'typing')
         link = "https://github.com/Lavin-tom/TelegramBot"
         formatted_message = f"[Click here]({link}) to visit the GitHub repository."
         bot.reply_to(m, formatted_message, parse_mode='Markdown')
 
+#show help
 @bot.message_handler(commands=['help'])
 def handle_start_help(m):
-        print('help')
         bot.send_chat_action(m.chat.id,'typing')
         text = random.choice(hey_msg)
         text += ' '
@@ -110,11 +110,12 @@ def handle_start_help(m):
         text += ' , I am a '+ random.choice(bot_name) + " Bot"
         text += '\n\nI can do following things :'
         text += '\n 🔸 Provide Carnatic Ragas and Swaras'
-        text += '\n 🔸 Provide Western Music note (comming soon)'
+        text += '\n 🔸 Provide Western Scales and Chords'
         text += "\n\nSee all commands at  /all  :)"
         text += "\n\n\nContact Developer 👨‍💻: @love_in_tom"
         bot.reply_to(m,text)
 
+#show start 
 @bot.message_handler(commands=['start'])
 def command_start(m):
 	cid = m.chat.id
@@ -130,16 +131,13 @@ def command_searchRaga(m):
     bot.send_message(cid, "what do you want ?",reply_markup=carnatic_select)
     userStep[cid] = 'carnatic'
 
-#search carnatic swaras
+#search western
 @bot.message_handler(commands=['western'])
 def command_searchSwaras(m):
     cid = m.chat.id
     bot.send_message(cid, "what do you want ?",reply_markup=western_select)
     userStep[cid] = 'western'
-    
-    #text = "Still under development..."
-    #bot.reply_to(m,text)
-
+#--------------------------------Custom keyboard functions-------------------------#
 #--------------------------------------Western Notes-------------------------------#
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western')
 def msg_cpp_select(m):
@@ -149,7 +147,6 @@ def msg_cpp_select(m):
     userQuery = m.text.lower()
     if userQuery == 'scales':
         tsearch = 'Enter which scales u want to know' 
-        #userQuery= 'mohanam'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'western_scale_search'
 
@@ -165,28 +162,35 @@ def msg_cpp_select(m):
 def handle_user_scale_query(m):
     try:
         userQuery = m.text.upper()
-        print(userQuery)
         new_dict = copy_dictionary(westerndata, userQuery)
         text = ""
 
         if "major_scale" in new_dict[userQuery]:
-            text += "Major Scale : "
+            text += "*Major Scale*: "
             text += new_dict[userQuery]['major_scale'] + "\n"
+            text += "\n"
         if "minor_scale_natural" in new_dict[userQuery]:
-            text += "Natural Minor Scale : "
+            text += "*Natural Minor Scale*: "
             text += str(new_dict[userQuery]['minor_scale_natural']) + "\n"
-            text += "Melodic Minor Scale : \n"        
+            text += "\n"
+            text += "*Melodic Minor Scale*: \n"        
         if "minor_scale_melodic_ascending" in new_dict[userQuery]:
-            text += "Ascending : "
-            text += str(new_dict[userQuery]['minor_scale_melodic_ascending']) + "\n"      
-        if "minor_scale_harmonic" in new_dict[userQuery]:
-            text += "Harmonic : "
-            text += str(new_dict[userQuery]['minor_scale_harmonic']) + "\n"      
+            text += "Ascending: "
+            text += str(new_dict[userQuery]['minor_scale_melodic_ascending']) + "\n"   
+            text += "Descending: "
+            text += str(new_dict[userQuery]['minor_scale_melodic_descending']) + "\n"
+            text += "\n"
+            text += "*Harmonic Minor Scale*: \n"                
+        if "minor_scale_harmonic_ascending" in new_dict[userQuery]:
+            text += "Ascending: "
+            text += str(new_dict[userQuery]['minor_scale_harmonic_ascending']) + "\n"
+            text += "Descending: "
+            text += str(new_dict[userQuery]['minor_scale_harmonic_descending']) + "\n"      
 
-        bot.send_message(m.chat.id,text)
+        bot.send_message(m.chat.id,text,parse_mode="Markdown")
 	    
     except Exception as e:
-        bot.send_message(m.chat.id, "Search error!! Try again\n Now you are in Western scale mode if you want to switch to chord click here /western and select chords")
+        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Western scale mode\nIf you want to switch to chord click here /western and select chords")
         # Calculate the similarity score between the user input and each word in the JSON data
         similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in westerndata]
 
@@ -195,24 +199,18 @@ def handle_user_scale_query(m):
 
         # Get the top N suggestions based on the highest similarity scores
         top_suggestions = [score[0] for score in similarity_scores[:3]]
-        print("Did you mean:")
         bot.reply_to(m,"Did you mean: ")
-
-        choice_msg = "Select any one"
-        bot.send_message(m.chat.id,choice_msg)
         cid = m.chat.id
         suggestions_select=types.ReplyKeyboardMarkup(one_time_keyboard=True)
         for suggestion in top_suggestions:
             suggestions_select.add(suggestion)
-            #bot.send_message(m.chat.id,suggestion)
-        bot.send_message(cid, "what do you want ?",reply_markup=suggestions_select)
+        bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
 #[value == western_chords_search]    
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western_chord_search')
 def handle_user_scale_query(m):
     try:
         userQuery = m.text.upper()
-        print(userQuery)
         new_dict = copy_dictionary(westerndata, userQuery)
         text = ""
 
@@ -226,7 +224,7 @@ def handle_user_scale_query(m):
         bot.send_message(m.chat.id,text)
 	    
     except Exception as e:
-        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Western Scale mode if you want to switch to chords click here /western and select scales")
+        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Western Scale mode\nIf you want to switch to chords click here /western and select scales")
         # Calculate the similarity score between the user input and each word in the JSON data
         similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in westerndata]
 
@@ -235,20 +233,14 @@ def handle_user_scale_query(m):
 
         # Get the top N suggestions based on the highest similarity scores
         top_suggestions = [score[0] for score in similarity_scores[:3]]
-        print("Did you mean:")
         bot.reply_to(m,"Did you mean: ")
-
-        choice_msg = "Select any one"
-        bot.send_message(m.chat.id,choice_msg)
         cid = m.chat.id
         suggestions_select=types.ReplyKeyboardMarkup(one_time_keyboard=True)
         for suggestion in top_suggestions:
             suggestions_select.add(suggestion)
-            #bot.send_message(m.chat.id,suggestion)
-        bot.send_message(cid, "what do you want ?",reply_markup=suggestions_select)
+        bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
-#-------------------Custom keyboard functions-------------------
-#---------------------------carnatic raga-----------------------------
+#---------------------------carnatic raga----------------------------------------------
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'carnatic')
 def msg_cpp_select(m):
     cid = m.chat.id
@@ -257,7 +249,6 @@ def msg_cpp_select(m):
     userQuery = m.text.lower()
     if userQuery == 'carnatic-ragas':
         tsearch = 'Enter which raga u want to search' 
-        #userQuery= 'mohanam'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'carnatic_ragas_search'
 
@@ -273,7 +264,6 @@ def msg_cpp_select(m):
 def handle_user_ragas_query(m):
     try:
         userQuery = m.text.lower()
-        #print(userQuery)
         new_dict = copy_dictionary(ragadata, userQuery)
         text = ""
 
@@ -282,10 +272,10 @@ def handle_user_ragas_query(m):
             text += new_dict[userQuery]['name'] + "\n"
         if "janya" in new_dict[userQuery]:
             text += "Janya: "
-            text += str(new_dict[userQuery]['janya']) + "\n"        
+            text += str(new_dict[userQuery]['janya']) + "\n"  
         if "melakarta" in new_dict[userQuery]:
             text += "Melakarta: "
-            text += new_dict[userQuery]['melakarta'] + "\n"  
+            text += str(new_dict[userQuery]['melakarta']) + "\n"  
         if "derived_from" in new_dict[userQuery]:
             text += "Derived from: "
             text += new_dict[userQuery]['derived_from'] + "\n" 
@@ -299,7 +289,7 @@ def handle_user_ragas_query(m):
         bot.send_message(m.chat.id,text)
 	    
     except Exception as e:
-        bot.send_message(m.chat.id, "Search error!! Try again\n Now you are in Raga mode if you want to switch to swara  click here /carnatic and select carnatic-swara")
+        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Raga mode\nIf you want to switch to swara click here /carnatic and select carnatic-swara")
         # Calculate the similarity score between the user input and each word in the JSON data
         similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in ragadata]
 
@@ -308,24 +298,18 @@ def handle_user_ragas_query(m):
 
         # Get the top N suggestions based on the highest similarity scores
         top_suggestions = [score[0] for score in similarity_scores[:3]]
-        print("Did you mean:")
         bot.reply_to(m,"Did you mean: ")
-
-        choice_msg = "Select any one"
-        bot.send_message(m.chat.id,choice_msg)
         cid = m.chat.id
         suggestions_select=types.ReplyKeyboardMarkup(one_time_keyboard=True)
         for suggestion in top_suggestions:
             suggestions_select.add(suggestion)
-            #bot.send_message(m.chat.id,suggestion)
-        bot.send_message(cid, "what do you want ?",reply_markup=suggestions_select)
+        bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
 #[value == carnatic_swara_search]    
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'carnatic_swaras_search')
 def handle_user_swara_query(m):
     try:
         userQuery = m.text.upper()
-        print(userQuery)
         new_dict = copy_dictionary(swarasdata, userQuery)
         text = ""
 
@@ -351,7 +335,7 @@ def handle_user_swara_query(m):
         bot.send_message(m.chat.id,text)
 	    
     except Exception as e:
-        bot.send_message(m.chat.id, "Search error!! Try again")
+        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Swara mode\nIf you want to switch to Raga click here /carnatic and select carnatic-ragas")
         # Calculate the similarity score between the user input and each word in the JSON data
         similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in swarasdata]
 
@@ -360,16 +344,12 @@ def handle_user_swara_query(m):
 
         # Get the top N suggestions based on the highest similarity scores
         top_suggestions = [score[0] for score in similarity_scores[:3]]
-        print("Did you mean:")
         bot.reply_to(m,"Did you mean: ")
-        choice_msg = "Select any one"
-        bot.send_message(m.chat.id,choice_msg)
         cid = m.chat.id
         suggestions_select=types.ReplyKeyboardMarkup(one_time_keyboard=True)
         for suggestion in top_suggestions:
             suggestions_select.add(suggestion)
-            #bot.send_message(m.chat.id,suggestion)
-        bot.send_message(cid, "what do you want ?",reply_markup=suggestions_select)
+        bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
 #welcome code
 @bot.message_handler(func=lambda message: True, content_types=['text'])
