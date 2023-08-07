@@ -2,6 +2,9 @@
     "kanakangi": {
       "name": "Kanakāngi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 1,
+      "chakra": "Indu",
       "scales": [
         {
           "arohanam": "S R1 G1 M1 P D1 N1 S",
@@ -133,6 +136,9 @@
     "rathnangi": {
       "name": "Rathnāngi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 2,
+      "chakra": "Indu",
       "scales": [
         {
           "arohanam": "S R1 G1 M1 P D1 N2 S",
@@ -209,6 +215,9 @@
     "ganamoorti": {
       "name": "Gānamoorti",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 3,
+      "chakra": "Indu",
       "scales": [
         {
           "arohanam": "S R1 G1 M1 P D1 N3 S",
@@ -274,6 +283,9 @@
     "vanaspati": {
       "name": "Vanaspati",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 4,
+      "chakra": "Indu",
       "scales": [
         {
           "arohanam": "S R1 G1 M1 P D2 N2 S",
@@ -328,6 +340,9 @@
     "manavati": {
       "name": "Mānavati",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 5,
+      "chakra": "Indu",
       "scales": [
         {
           "arohanam": "S R1 G1 M1 P D2 N3 S",
@@ -371,6 +386,9 @@
     "tanaroopi": {
       "name": "Tānaroopi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 6,
+      "chakra": "Indu",
       "scales": [
         {
           "arohanam": "S R1 G1 M1 P D3 N3 S",
@@ -392,6 +410,9 @@
     "senavati": {
       "name": "Senāvati",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 7,
+      "chakra": "Netra",
       "scales": [
         {
           "arohanam": "S R1 G2 M1 P D1 N1 S",
@@ -457,6 +478,9 @@
     "hanumatodi": {
       "name": "Hanumatodi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 8,
+      "chakra": "Netra",
       "scales": [
         {
           "arohanam": "S R1 G2 M1 P D1 N2 S",
@@ -709,6 +733,9 @@
     "dhenuka": {
       "name": "Dhenuka",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 9,
+      "chakra": "Netra",
       "scales": [
         {
           "arohanam": "S R1 G2 M1 P D1 N3 S",
@@ -774,6 +801,9 @@
     "natakapriya": {
       "name": "Nātakapriya",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 10,
+      "chakra": "Netra",
       "scales": [
         {
           "arohanam": "S R1 G2 M1 P D2 N2 S",
@@ -927,6 +957,9 @@
     "kokilapriyaa": {
       "name": "Kokilapriyaa",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 11,
+      "chakra": "Netra",
       "scales": [
         {
           "arohanam": "S R1 G2 M1 P D2 N3 S",
@@ -1025,6 +1058,9 @@
     "rupavati": {
       "name": "Rupavati",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 12,
+      "chakra": "Netra",
       "scales": [
         {
           "arohanam": "S R1 G2 M1 P D3 N3 S",
@@ -1057,6 +1093,9 @@
     "gayakapriya": {
       "name": "Gāyakapriya",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 13,
+      "chakra": "Agni",
       "scales": [
         {
           "arohanam": "S R1 G3 M1 P D1 N1 S",
@@ -1126,6 +1165,9 @@
     "vakulabharanam": {
       "name": "Vakulābharanam",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 14,
+      "chakra": "Agni",
       "scales": [
         {
           "arohanam": "S R1 G3 M1 P D1 N2 S",
@@ -1279,6 +1321,9 @@
     "mayamalava_gowla": {
       "name": "Māyamālava Gowla",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 15,
+      "chakra": "Agni",
       "scales": [
         {
           "arohanam": "S R1 G3 M1 P D1 N3 S",
@@ -1943,6 +1988,9 @@
     "chakravakam": {
       "name": "Chakravākam",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 16,
+      "chakra": "Agni",
       "scales": [
         {
           "arohanam": "S R1 G3 M1 P D2 N2 S",
@@ -2206,6 +2254,9 @@
     "sooryakantam": {
       "name": "Sooryakāntam",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 17,
+      "chakra": "Agni",
       "scales": [
         {
           "arohanam": "S R1 G3 M1 P D2 N3 S",
@@ -2359,6 +2410,9 @@
     "hatakambari": {
       "name": "Hatakāmbari",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 18,
+      "chakra": "Agni",
       "scales": [
         {
           "arohanam": "S R1 G3 M1 P D3 N3 S",
@@ -2413,6 +2467,9 @@
     "jhankaradhvani": {
       "name": "Jhankāradhvani",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 19,
+      "chakra": "Veda",
       "scales": [
         {
           "arohanam": "S R2 G2 M1 P D1 N1 S",
@@ -2498,6 +2555,9 @@
     "natabhairavi": {
       "name": "Natabhairavi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 20,
+      "chakra": "Veda",
       "scales": [
         {
           "arohanam": "S R2 G2 M1 P D1 N2 S",
@@ -2996,6 +3056,9 @@
     "keeravani": {
       "name": "Keeravāni",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 21,
+      "chakra": "Veda",
       "scales": [
         {
           "arohanam": "S R2 G2 M1 P D1 N3 S",
@@ -3204,6 +3267,9 @@
     "kharaharapriya": {
       "name": "Kharaharapriya",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 22,
+      "chakra": "Veda",
       "scales": [
         {
           "arohanam": "S R2 G2 M1 P D2 N2 S",
@@ -4351,6 +4417,9 @@
     "gowri_manohari": {
       "name": "Gowri Manohari",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 23,
+      "chakra": "Veda",
       "scales": [
         {
           "arohanam": "S R2 G2 M1 P D2 N3 S",
@@ -4473,6 +4542,9 @@
     "varunapriyaa": {
       "name": "Varunapriyaa",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 24,
+      "chakra": "Veda",
       "scales": [
         {
           "arohanam": "S R2 G2 M1 P D3 N3 S",
@@ -4494,6 +4566,9 @@
     "mararanjani": {
       "name": "Māraranjani",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 25,
+      "chakra": "Baana",
       "scales": [
         {
           "arohanam": "S R2 G3 M1 P D1 N1 S",
@@ -4559,6 +4634,9 @@
     "charukeshi": {
       "name": "Chārukeshi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 26,
+      "chakra": "Baana",
       "scales": [
         {
           "arohanam": "S R2 G3 M1 P D1 N2 S",
@@ -4639,6 +4717,9 @@
     "sarasangi": {
       "name": "Sarasāngi",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 28,
+      "chakra": "Baana",
       "scales": [
         {
           "arohanam": "S R2 G3 M1 P D1 N3 S",
@@ -4780,6 +4861,9 @@
     },
     "harikambhoji": {
       "name": "Harikāmbhoji",
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 27,
+      "chakra": "Baana",
       "melakarta": true,
       "scales": [
         {
@@ -6000,6 +6084,9 @@
     "dheera_shankarabharanam": {
       "name": "Dheera Shankarābharanam",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 29,
+      "chakra": "Baana",
       "scales": [
         {
           "arohanam": "S R2 G3 M1 P D2 N3 S",
@@ -6751,6 +6838,9 @@
     "naganandhini": {
       "name": "Nāganandhini",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 30,
+      "chakra": "Baana",
       "scales": [
         {
           "arohanam": "S R2 G3 M1 P D3 N3 S",
@@ -6805,6 +6895,9 @@
     "yagapriya": {
       "name": "Yāgapriyā",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 31,
+      "chakra": "Rutu",
       "scales": [
         {
           "arohanam": "S R3 G3 M1 P D1 N1 S",
@@ -6892,6 +6985,9 @@
     "ragavardhani": {
       "name": "Rāgavardhani",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 32,
+      "chakra": "Rutu",
       "scales": [
         {
           "arohanam": "S R3 G3 M1 P D1 N2 S",
@@ -6968,6 +7064,9 @@
     "gangeyabhushani": {
       "name": "Gangeyabhushani",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 33,
+      "chakra": "Rutu",
       "scales": [
         {
           "arohanam": "S R3 G3 M1 P D1 N3 S",
@@ -6989,6 +7088,9 @@
     "vagadeeshwari": {
       "name": "Vāgadeeshwari",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 34,
+      "chakra": "Rutu",
       "scales": [
         {
           "arohanam": "S R3 G3 M1 P D2 N2 S",
@@ -7087,6 +7189,9 @@
     "shulini": {
       "name": "Shulini",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 35,
+      "chakra": "Rutu",
       "scales": [
         {
           "arohanam": "S R3 G3 M1 P D2 N3 S",
@@ -7145,6 +7250,9 @@
     "chalanattai": {
       "name": "Chalanāttai",
       "melakarta": true,
+      "melakarta_section": "Suddha Madhyama Melakarta",
+      "raga_number": 36,
+      "chakra": "Rutu",
       "scales": [
         {
           "arohanam": "S R3 G3 M1 P D3 N3 S",
@@ -7199,6 +7307,9 @@
     "salagam": {
       "name": "Sālagam",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 37,
+      "chakra": "Rushi",
       "scales": [
         {
           "arohanam": "S R1 G1 M2 P D1 N1 S",
@@ -7231,6 +7342,9 @@
     "jalarnavam": {
       "name": "Jalārnavam",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 38,
+      "chakra": "Rushi",
       "scales": [
         {
           "arohanam": "S R1 G1 M2 P D1 N2 S",
@@ -7263,6 +7377,9 @@
     "jhalavarali": {
       "name": "Jhālavarāli",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 39,
+      "chakra": "Rushi",
       "scales": [
         {
           "arohanam": "S R1 G1 M2 P D1 N3 S",
@@ -7361,6 +7478,9 @@
     "navaneetham": {
       "name": "Navaneetham",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 40,
+      "chakra": "Rushi",
       "scales": [
         {
           "arohanam": "S R1 G1 M2 P D2 N2 S",
@@ -7382,6 +7502,9 @@
     "pavani": {
       "name": "Pāvani",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 41,
+      "chakra": "Rushi",
       "scales": [
         {
           "arohanam": "S R1 G1 M2 P D2 N3 S",
@@ -7436,6 +7559,9 @@
     "raghupriyaa": {
       "name": "Raghupriyaa",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 42,
+      "chakra": "Rushi",
       "scales": [
         {
           "arohanam": "S R1 G1 M2 P D3 N3 S",
@@ -7490,6 +7616,9 @@
     "ghavambhodi": {
       "name": "Ghavāmbhodi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 45,
+      "chakra": "Vasu",
       "scales": [
         {
           "arohanam": "S R1 G2 M2 P D1 N1 S",
@@ -7555,6 +7684,9 @@
     "bhavapriya": {
       "name": "Bhavapriya",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 48,
+      "chakra": "Vasu",
       "scales": [
         {
           "arohanam": "S R1 G2 M2 P D1 N2 S",
@@ -7587,6 +7719,9 @@
     "shubhapanthuvarali": {
       "name": "Shubhapanthuvarāli",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 44,
+      "chakra": "Vasu",
       "scales": [
         {
           "arohanam": "S R1 G2 M2 P D1 N3 S",
@@ -7740,6 +7875,9 @@
     "shadvidhamargini": {
       "name": "Shadvidhamārgini",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 43,
+      "chakra": "Vasu",
       "scales": [
         {
           "arohanam": "S R1 G2 M2 P D2 N2 S",
@@ -7805,6 +7943,9 @@
     "suvarnangi": {
       "name": "Suvarnāngi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 46,
+      "chakra": "Vasu",
       "scales": [
         {
           "arohanam": "S R1 G2 M2 P D2 N3 S",
@@ -7859,6 +8000,9 @@
     "divyamani": {
       "name": "Divyamani",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 47,
+      "chakra": "Vasu",
       "scales": [
         {
           "arohanam": "S R1 G2 M2 P D3 N3 S",
@@ -7924,6 +8068,9 @@
     "dhavalambari": {
       "name": "Dhavalāmbari",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 49,
+      "chakra": "Brahma",
       "scales": [
         {
           "arohanam": "S R1 G3 M2 P D1 N1 S",
@@ -7989,6 +8136,9 @@
     "namanarayani": {
       "name": "Nāmanārāyani",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 50,
+      "chakra": "Brahma",
       "scales": [
         {
           "arohanam": "S R1 G3 M2 P D1 N2 S",
@@ -8032,6 +8182,9 @@
     "panthuvarali": {
       "name": "Panthuvarāli (Kāmavardhani)",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 51,
+      "chakra": "Brahma",
       "scales": [
         {
           "arohanam": "S R1 G3 M2 P D1 N3 S",
@@ -8218,6 +8371,9 @@
     "ramapriya": {
       "name": "Rāmapriyā",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 52,
+      "chakra": "Brahma",
       "scales": [
         {
           "arohanam": "S R1 G3 M2 P D2 N2 S",
@@ -8360,6 +8516,9 @@
     "gamanashrama": {
       "name": "Gamanashrama",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 53,
+      "chakra": "Brahma",
       "scales": [
         {
           "arohanam": "S R1 G3 M2 P D2 N3 S",
@@ -8491,6 +8650,9 @@
     "vishvambhari": {
       "name": "Vishvāmbhari",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 54,
+      "chakra": "Brahma",
       "scales": [
         {
           "arohanam": "S R1 G3 M2 P D3 N3 S",
@@ -8578,6 +8740,9 @@
     "shyamalangi": {
       "name": "Shyāmalāngi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 55,
+      "chakra": "Disi",
       "scales": [
         {
           "arohanam": "S R2 G2 M2 P D1 N1 S",
@@ -8621,6 +8786,9 @@
     "shanmukhapriyaa": {
       "name": "Shanmukhapriyaa",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 56,
+      "chakra": "Disi",
       "scales": [
         {
           "arohanam": "S R2 G2 M2 P D1 N2 S",
@@ -8763,6 +8931,9 @@
     "simhendramadhyamam": {
       "name": "Simhendramadhyamam (Sumadhyuti)",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 57,
+      "chakra": "Disi",
       "scales": [
         {
           "arohanam": "S R2 G2 M2 P D1 N3 S",
@@ -8872,6 +9043,9 @@
     "hemavathi": {
       "name": "Hemavathi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 58,
+      "chakra": "Disi",
       "scales": [
         {
           "arohanam": "S R2 G2 M2 P D2 N2 S",
@@ -9014,6 +9188,9 @@
     "dharmavathi": {
       "name": "Dharmavathi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 59,
+      "chakra": "Disi",
       "scales": [
         {
           "arohanam": "S R2 G2 M2 P D2 N3 S",
@@ -9156,6 +9333,9 @@
     "neethimathi": {
       "name": "Neethimathi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 60,
+      "chakra": "Disi",
       "scales": [
         {
           "arohanam": "S R2 G2 M2 P D3 N3 S",
@@ -9247,6 +9427,9 @@
     "kanthamani": {
       "name": "Kānthāmani",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 61,
+      "chakra": "Rudra",
       "scales": [
         {
           "arohanam": "S R2 G3 M2 P D1 N1 S",
@@ -9290,6 +9473,9 @@
     "rishabhapriya": {
       "name": "Rishabhapriya",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 62,
+      "chakra": "Rudra",
       "scales": [
         {
           "arohanam": "S R2 G3 M2 P D1 N2 S",
@@ -9355,6 +9541,9 @@
     "lathangi": {
       "name": "Lathāngi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 63,
+      "chakra": "Rudra",
       "scales": [
         {
           "arohanam": "S R2 G3 M2 P D1 N3 S",
@@ -9486,6 +9675,9 @@
     "vachaspathi": {
       "name": "Vāchaspathi",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 64,
+      "chakra": "Rudra",
       "scales": [
         {
           "arohanam": "S R2 G3 M2 P D2 N2 S",
@@ -9672,6 +9864,9 @@
     "mechakalyani": {
       "name": "Mechakalyāni",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 65,
+      "chakra": "Rudra",
       "scales": [
         {
           "arohanam": "S R2 G3 M2 P D2 N3 S",
@@ -9970,6 +10165,9 @@
     "chitrambari": {
       "name": "Chitrāmbari",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 66,
+      "chakra": "Rudra",
       "scales": [
         {
           "arohanam": "S R2 G3 M2 P D3 N3 S",
@@ -10035,6 +10233,9 @@
     "sucharitra": {
       "name": "Sucharitra",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 67,
+      "chakra": "Aaditya",
       "scales": [
         {
           "arohanam": "S R3 G3 M2 P D1 N1 S",
@@ -10056,6 +10257,9 @@
     "jyothiswaroopini": {
       "name": "Jyothiswaroopini",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 68,
+      "chakra": "Aaditya",
       "scales": [
         {
           "arohanam": "S R3 G3 M2 P D1 N2 S",
@@ -10110,6 +10314,9 @@
     "dhatuvardhani": {
       "name": "Dhātuvardhani",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 69,
+      "chakra": "Aaditya",
       "scales": [
         {
           "arohanam": "S R3 G3 M2 P D1 N3 S",
@@ -10164,6 +10371,9 @@
     "nasikabhooshhani": {
       "name": "Nāsikabhooshhani",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 71,
+      "chakra": "Aaditya",
       "scales": [
         {
           "arohanam": "S R3 G3 M2 P D2 N2 S",
@@ -10207,6 +10417,9 @@
     "kosalam": {
       "name": "Kosalam",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 70,
+      "chakra": "Aaditya",
       "scales": [
         {
           "arohanam": "S R3 G3 M2 P D2 N3 S",
@@ -10239,6 +10452,9 @@
     "rasikapriya": {
       "name": "Rasikapriya",
       "melakarta": true,
+      "melakarta_section": "Prati Madhyama Melakarta",
+      "raga_number": 72,
+      "chakra": "Aaditya",
       "scales": [
         {
           "arohanam": "S R3 G3 M2 P D3 N3 S",

@@ -3,6 +3,7 @@ import random
 import json
 from telebot import types
 from fuzzywuzzy import fuzz
+import re
 
 TOKEN = open('api-key.txt').readline()
 bot = telebot.TeleBot(TOKEN)
@@ -32,17 +33,38 @@ carnatic_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 carnatic_select.add('Carnatic-Ragas','Carnatic-Swaras')
 western_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 western_select.add('Scales','Chords')
+convert_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+convert_select.add('Convert-from-Data-base','Convert-from-manual-entry')
 suggestions_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
 commands = {
 			'start':'Restart bot',
 			'carnatic':'Search Carnatic ragas and swaras',
-            'western':'still under development',
+            'western':'Search Western Scales and chords',
+            'convert':'Convert Carnatic notes to Western notes',
             'source':'Source code of me',
             'help':'Help',
 			'all':'List all commands',
             'about':'About me',
 			}
+
+RagaToWestern = {'S':'C',
+                'R1':'C#',
+                'R2':'D',
+                'R3':'D#',
+                'G1':'D',
+                'G2':'D#',
+                'G3':'E',
+                'M1':'F',
+                'M2':'F#',
+                'P':'G',
+                'D1':'G#',
+                'D2':'A',
+                'D3':'A#',
+                'N1':'A',
+                'N2':'A#',
+                'N3':'B'
+                }
 
 #other functions
 def copy_dictionary(original_dict, key):
@@ -137,6 +159,13 @@ def command_searchSwaras(m):
     cid = m.chat.id
     bot.send_message(cid, "what do you want ?",reply_markup=western_select)
     userStep[cid] = 'western'
+
+#convert carnatic notes to western notes
+@bot.message_handler(commands=['convert'])
+def command_searchSwaras(m):
+    cid = m.chat.id
+    bot.send_message(cid, "what do you want ?",reply_markup=convert_select)
+    userStep[cid] = 'convert'
 #--------------------------------Custom keyboard functions-------------------------#
 #--------------------------------------Western Notes-------------------------------#
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western')
@@ -275,7 +304,16 @@ def handle_user_ragas_query(m):
             text += str(new_dict[userQuery]['janya']) + "\n"  
         if "melakarta" in new_dict[userQuery]:
             text += "Melakarta: "
-            text += str(new_dict[userQuery]['melakarta']) + "\n"  
+            text += str(new_dict[userQuery]['melakarta']) + "\n" 
+        if "melakarta_section" in new_dict[userQuery]:
+            text += "Melakarta section: "
+            text += new_dict[userQuery]['melakarta_section'] + "\n" 
+        if "raga_number" in new_dict[userQuery]:
+            text += "Raga Number: "
+            text += str(new_dict[userQuery]['raga_number']) + "\n"
+        if "chakra" in new_dict[userQuery]:
+            text += "Chakra: "
+            text += new_dict[userQuery]['chakra'] + "\n"  
         if "derived_from" in new_dict[userQuery]:
             text += "Derived from: "
             text += new_dict[userQuery]['derived_from'] + "\n" 
@@ -350,6 +388,90 @@ def handle_user_swara_query(m):
         for suggestion in top_suggestions:
             suggestions_select.add(suggestion)
         bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
+
+#---------------------------convert----------------------------------------------
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'convert')
+def msg_cpp_select(m):
+    cid = m.chat.id
+    userStep[cid] = 0
+    bot.send_chat_action(cid, 'typing')
+    userQuery = m.text.lower()
+    if userQuery == 'Convert-from-Data-base':
+        tsearch = 'Enter which raga u want to convert' 
+        bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
+        userStep[cid] = 'Convert-from-Data-base'
+
+    elif userQuery == 'Convert-from-manual-entry':
+        tsearch = 'Enter ragas you want to convert, make sure each note was seperted by sigle space' 
+        bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
+        userStep[cid] = 'Convert-from-manual-entry'
+    else:
+        bot.send_message(cid,"Invalid Commmands")
+
+#[value == convertion]    
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Convert-from-Data-base')
+def handle_convert_from_db(m):
+    try:
+        userQuery = m.text.lower()
+        new_dict = copy_dictionary(ragadata, userQuery)
+        text = ""
+
+        if "scales" in new_dict[userQuery]:
+            arohanam = new_dict[userQuery]['scales'][0]['arohanam']
+            avarohanam = new_dict[userQuery]['scales'][0]['avarohanam']
+
+            arohanam = re.findall(r'\b\w+\d*\b', arohanam)
+            avarohanam = re.findall(r'\b\w+\d*\b', avarohanam)
+
+            text += "Scale: \n"
+            text += "Arohanam: "
+            for i in range(len(arohanam)):
+                if arohanam[i] in RagaToWestern:
+                    text += RagaToWestern[arohanam[i]] + " " 
+            text += "\n"
+            text += "Avarohanam: "
+            for i in range(len(avarohanam)):
+                if avarohanam[i] in RagaToWestern:
+                    text += RagaToWestern[avarohanam[i]] + " "
+            text += '\n'  
+
+        bot.send_message(m.chat.id,text)
+	    
+    except Exception as e:
+        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Swara mode\nIf you want to switch to Raga click here /carnatic and select carnatic-ragas")
+        # Calculate the similarity score between the user input and each word in the JSON data
+        similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in swarasdata]
+
+        # Sort the similarity scores descending order
+        similarity_scores.sort(key=lambda x: x[1], reverse=True)
+
+        # Get the top N suggestions based on the highest similarity scores
+        top_suggestions = [score[0] for score in similarity_scores[:3]]
+        bot.reply_to(m,"Did you mean: ")
+        cid = m.chat.id
+        suggestions_select=types.ReplyKeyboardMarkup(one_time_keyboard=True)
+        for suggestion in top_suggestions:
+            suggestions_select.add(suggestion)
+        bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
+
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Convert-from-manual-entry')
+def handle_convert_from_userinput(m):
+    try:
+        userQuery = m.text.lower()
+        text = ""
+
+        userRaga = re.findall(r'\b\w+\d*\b', userQuery)
+
+        text += "Scale: \n"
+        for i in range(len(userRaga)):
+            if userRaga[i] in RagaToWestern:
+                text += RagaToWestern[userRaga[i]] + " " 
+            text += "\n"
+
+        bot.send_message(m.chat.id,text)
+	    
+    except Exception as e:
+        bot.send_message(m.chat.id, "Convertion error Try again\nPlease note-conversion is under development")
 
 #welcome code
 @bot.message_handler(func=lambda message: True, content_types=['text'])
