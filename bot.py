@@ -21,12 +21,19 @@ with open('res/swaras.json', 'r', encoding='utf-8') as swara:
 
 #load western notes json file    
 with open('res/western_notes.json', 'r', encoding='utf-8') as western:
-    westerndata = json.load(western)    
+    westerndata = json.load(western)  
+
+#load western and carnatic notes json file    
+with open('res/halfnotes.json', 'r', encoding='utf-8') as halfnotes:
+    halfnotesdata = json.load(halfnotes)   
 
 hey_msg = ['Hi','Hello','Hey']
 user_name = ['Musician','Composer']
 bot_name = ['Musician','Composer']
 knownUsers = []
+arohanam = []
+avarohanam = []
+new_dicto = []
 userStep = {}
 
 carnatic_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
@@ -34,38 +41,37 @@ carnatic_select.add('Carnatic-Ragas','Carnatic-Swaras')
 western_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 western_select.add('Scales','Chords')
 convert_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-convert_select.add('Convert-from-Data-base','Convert-from-manual-entry')
+convert_select.add('Choose','Type')
+convert_scale_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+convert_scale_select.add('C','C#','D','D#','E','F','F#','G','G#','A','A#','B')
 suggestions_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
-commands = {
-			'start':'Restart bot',
+commands = {'start':'Restart bot',
 			'carnatic':'Search Carnatic ragas and swaras',
             'western':'Search Western Scales and chords',
             'convert':'Convert Carnatic notes to Western notes',
             'source':'Source code of me',
             'help':'Help',
 			'all':'List all commands',
-            'about':'About me',
-			}
-
-RagaToWestern = {'S':'C',
-                'R1':'C#',
-                'R2':'D',
-                'R3':'D#',
-                'G1':'D',
-                'G2':'D#',
-                'G3':'E',
-                'M1':'F',
-                'M2':'F#',
-                'P':'G',
-                'D1':'G#',
-                'D2':'A',
-                'D3':'A#',
-                'N1':'A',
-                'N2':'A#',
-                'N3':'B'
-                }
-
+            'about':'About me'}
+RagaToWestern ={
+    "S":"C",
+    "R1":"C#",
+    "R2":"D",
+    "R3":"D#",
+    "G1":"D",
+    "G2":"D#",
+    "G3":"E",
+    "M1":"F",
+    "M2":"F#",
+    "P":"G",
+    "D1":"G#",
+    "D2":"A",
+    "D3":"A#",
+    "N1":"A",
+    "N2":"A#",
+    "N3":"B"
+     }
 #other functions
 def copy_dictionary(original_dict, key):
     new_dict = {}
@@ -102,18 +108,18 @@ def command_all(m):
 
 #show about    
 @bot.message_handler(commands=['about'])
-def handle_start_help(m):
+def handle_about(m):
     bot.send_chat_action(m.chat.id,'typing')
-    note = "`Rhythm` is a chatbot designed to assist users in finding `Western(Scales and Chords)` & `Carnatic(Ragas and Swaras)` easily."
+    note = "`Rhythm` is a open source chatbot designed to assist users in finding `Western(Scales and Chords)` & `Carnatic(Ragas and Swaras)` notes and convertion easily."
     note += "It was created out of a love and passion for both `music` and `coding`." 
     note += "If you encounter any issues or have suggestions for improvements,"
     note += "please type /source for navigate to source code in github.\n"
-    note += "This project is inspired from [lpadukana/karnatic-music](https://github.com/lpadukana/karnatic-music) project"
+    #note += "This project is inspired from [lpadukana/karnatic-music](https://github.com/lpadukana/karnatic-music) project"
     bot.send_message(m.chat.id,note,parse_mode='Markdown')
 
 #show source
 @bot.message_handler(commands=['source'])
-def handle_start_help(m):
+def handle_source(m):
         bot.send_chat_action(m.chat.id,'typing')
         link = "https://github.com/Lavin-tom/TelegramBot"
         formatted_message = f"[Click here]({link}) to visit the GitHub repository."
@@ -121,7 +127,7 @@ def handle_start_help(m):
 
 #show help
 @bot.message_handler(commands=['help'])
-def handle_start_help(m):
+def handle_help(m):
         bot.send_chat_action(m.chat.id,'typing')
         text = random.choice(hey_msg)
         text += ' '
@@ -133,6 +139,7 @@ def handle_start_help(m):
         text += '\n\nI can do following things :'
         text += '\n 🔸 Provide Carnatic Ragas and Swaras'
         text += '\n 🔸 Provide Western Scales and Chords'
+        text += '\n 🔸 Convert Carnatic notes to Western notes (beta stage)'
         text += "\n\nSee all commands at  /all  :)"
         text += "\n\n\nContact Developer 👨‍💻: @love_in_tom"
         bot.reply_to(m,text)
@@ -144,7 +151,7 @@ def command_start(m):
 	if cid not in knownUsers:
 		knownUsers.append(cid)
 		userStep[cid] = 0
-	handle_start_help(m)
+	handle_help(m)
         
 #search carnatic 
 @bot.message_handler(commands=['carnatic'])
@@ -155,21 +162,22 @@ def command_searchRaga(m):
 
 #search western
 @bot.message_handler(commands=['western'])
-def command_searchSwaras(m):
+def command_western(m):
     cid = m.chat.id
     bot.send_message(cid, "what do you want ?",reply_markup=western_select)
     userStep[cid] = 'western'
 
 #convert carnatic notes to western notes
 @bot.message_handler(commands=['convert'])
-def command_searchSwaras(m):
+def command_convert(m):
     cid = m.chat.id
+    bot.send_message(cid,"Now you have two choice\n1.Choose a raga from Database\n2.Type your own ragas/swaras")
     bot.send_message(cid, "what do you want ?",reply_markup=convert_select)
     userStep[cid] = 'convert'
 #--------------------------------Custom keyboard functions-------------------------#
 #--------------------------------------Western Notes-------------------------------#
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western')
-def msg_cpp_select(m):
+def msg_western_select(m):
     cid = m.chat.id
     userStep[cid] = 0
     bot.send_chat_action(cid, 'typing')
@@ -271,7 +279,7 @@ def handle_user_scale_query(m):
 
 #---------------------------carnatic raga----------------------------------------------
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'carnatic')
-def msg_cpp_select(m):
+def msg_carnatic_select(m):
     cid = m.chat.id
     userStep[cid] = 0
     bot.send_chat_action(cid, 'typing')
@@ -391,56 +399,47 @@ def handle_user_swara_query(m):
 
 #---------------------------convert----------------------------------------------
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'convert')
-def msg_cpp_select(m):
+def msg_convert_select(m):
     cid = m.chat.id
     userStep[cid] = 0
     bot.send_chat_action(cid, 'typing')
     userQuery = m.text.lower()
-    if userQuery == 'Convert-from-Data-base':
-        tsearch = 'Enter which raga u want to convert' 
+    if userQuery == 'choose':
+        tsearch = 'Enter raga u want to convert to western notes' 
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
-        userStep[cid] = 'Convert-from-Data-base'
+        userStep[cid] = 'Choose'
 
-    elif userQuery == 'Convert-from-manual-entry':
-        tsearch = 'Enter ragas you want to convert, make sure each note was seperted by sigle space' 
+    elif userQuery == 'type':
+        tsearch = 'Enter raga you want to convert, make sure each note was seperted by space' 
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
-        userStep[cid] = 'Convert-from-manual-entry'
+        userStep[cid] = 'Type'
     else:
         bot.send_message(cid,"Invalid Commmands")
 
 #[value == convertion]    
-@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Convert-from-Data-base')
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Choose')
 def handle_convert_from_db(m):
     try:
         userQuery = m.text.lower()
-        new_dict = copy_dictionary(ragadata, userQuery)
+        new_dicto = copy_dictionary(ragadata, userQuery)
         text = ""
 
-        if "scales" in new_dict[userQuery]:
-            arohanam = new_dict[userQuery]['scales'][0]['arohanam']
-            avarohanam = new_dict[userQuery]['scales'][0]['avarohanam']
+        if "scales" in new_dicto[userQuery]:
+            global arohanam
+            arohanam = new_dicto[userQuery]['scales'][0]['arohanam']
+            global avarohanam 
+            avarohanam = new_dicto[userQuery]['scales'][0]['avarohanam']
 
             arohanam = re.findall(r'\b\w+\d*\b', arohanam)
             avarohanam = re.findall(r'\b\w+\d*\b', avarohanam)
+            cid = m.chat.id
+            bot.send_message(cid, "select any scale to convert",reply_markup=convert_scale_select)
+            userStep[cid] = 'convert_scale_select'
 
-            text += "Scale: \n"
-            text += "Arohanam: "
-            for i in range(len(arohanam)):
-                if arohanam[i] in RagaToWestern:
-                    text += RagaToWestern[arohanam[i]] + " " 
-            text += "\n"
-            text += "Avarohanam: "
-            for i in range(len(avarohanam)):
-                if avarohanam[i] in RagaToWestern:
-                    text += RagaToWestern[avarohanam[i]] + " "
-            text += '\n'  
-
-        bot.send_message(m.chat.id,text)
-	    
-    except Exception as e:
-        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Swara mode\nIf you want to switch to Raga click here /carnatic and select carnatic-ragas")
+    except:
+        bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in convert mode\nIf you want to switch to other modes use /all command")
         # Calculate the similarity score between the user input and each word in the JSON data
-        similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in swarasdata]
+        similarity_scores = [(word, fuzz.ratio(userQuery, word)) for word in ragadata]
 
         # Sort the similarity scores descending order
         similarity_scores.sort(key=lambda x: x[1], reverse=True)
@@ -454,10 +453,37 @@ def handle_convert_from_db(m):
             suggestions_select.add(suggestion)
         bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
-@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Convert-from-manual-entry')
+
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'convert_scale_select')
+def handle_convert_from_db(m):
+    cid = m.chat.id
+    userQuery = m.text.upper()
+    RagaToWestern = copy_dictionary(halfnotesdata,userQuery)
+    try: 
+        text = ''                 
+        text += "Scale: \n"
+        text += "Arohanam: "
+        for i in range(len(arohanam)):
+            if arohanam[i] in RagaToWestern[userQuery]:
+                text += RagaToWestern[userQuery][arohanam[i]] + " "
+                print(RagaToWestern[userQuery][arohanam[i]]) 
+        text += "\n"
+        text += "Avarohanam: "
+        for i in range(len(avarohanam)):
+            if avarohanam[i] in RagaToWestern[userQuery]:
+               text += RagaToWestern[userQuery][avarohanam[i]] + " "
+        text += '\n'  
+
+        bot.send_message(m.chat.id,text)
+	    
+    except Exception as e:
+        bot.send_message(cid, "error occur while converting. try again /convert")
+
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Type')
 def handle_convert_from_userinput(m):
     try:
-        userQuery = m.text.lower()
+        userQuery = m.text.upper()
+        print(userQuery)
         text = ""
 
         userRaga = re.findall(r'\b\w+\d*\b', userQuery)
@@ -466,12 +492,12 @@ def handle_convert_from_userinput(m):
         for i in range(len(userRaga)):
             if userRaga[i] in RagaToWestern:
                 text += RagaToWestern[userRaga[i]] + " " 
-            text += "\n"
+        text += "\n"
 
         bot.send_message(m.chat.id,text)
 	    
     except Exception as e:
-        bot.send_message(m.chat.id, "Convertion error Try again\nPlease note-conversion is under development")
+        bot.send_message(m.chat.id, "Convertion error Try again\nPlease note- module conversion is still under development")
 
 #welcome code
 @bot.message_handler(func=lambda message: True, content_types=['text'])
