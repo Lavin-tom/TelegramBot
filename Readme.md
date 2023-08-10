@@ -31,7 +31,7 @@ After you have installed the bot, you can start using it by typing commands in a
 * `/about` - About bot.
 
 ## Credit
-Bot icon from [flaticon](www.flaticon.com)
+Bot icon created by [Uniconlabs - Flaticon](https://www.flaticon.com/free-icons/ui)
 
 ## Reference
 * Telgram bot structure and idea from [vishal2376/telegram-bot](https://github.com/vishal2376/telegram-bot)
