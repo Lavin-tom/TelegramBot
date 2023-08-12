@@ -1,6 +1,6 @@
 # Rhythm - Telegram Bot
 
-### Bot Link - [Rhythm](t.me/RhythmLoveBot)
+### Bot Link - [Rhythm](https://t.me/RhythmLoveBot)
 
 This Telegram bot provides the following features:
 
