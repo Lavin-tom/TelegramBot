@@ -139,7 +139,7 @@ def handle_help(m):
         text += '\n\nI can do following things :'
         text += '\n 🔸 Provide Carnatic Ragas and Swaras'
         text += '\n 🔸 Provide Western Scales and Chords'
-        text += '\n 🔸 Convert Carnatic notes to Western notes (beta stage)'
+        text += '\n 🔸 Convert Carnatic notes to Western notes'
         text += "\n\nSee all commands at  /all  :)"
         text += "\n\n\nContact Developer 👨‍💻: @love_in_tom"
         bot.reply_to(m,text)
