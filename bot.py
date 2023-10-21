@@ -4,6 +4,10 @@ import json
 from telebot import types
 from fuzzywuzzy import fuzz
 import re
+import numpy as np
+import sounddevice as sd
+import soundfile as sf
+import librosa
 
 TOKEN = open('api-key.txt').readline()
 bot = telebot.TeleBot(TOKEN)
@@ -11,21 +15,21 @@ print("Bot is online")
 
 hideBoard = types.ReplyKeyboardRemove()  # hide the keyboard
 
-#load ragas json file    
+#load ragas json file
 with open('res/raga.json', 'r', encoding='utf-8') as raga:
     ragadata = json.load(raga)
 
-#load swaras json file    
+#load swaras json file
 with open('res/swaras.json', 'r', encoding='utf-8') as swara:
     swarasdata = json.load(swara)
 
-#load western notes json file    
+#load western notes json file
 with open('res/western_notes.json', 'r', encoding='utf-8') as western:
-    westerndata = json.load(western)  
+    westerndata = json.load(western)
 
-#load western and carnatic notes json file    
+#load western and carnatic notes json file
 with open('res/halfnotes.json', 'r', encoding='utf-8') as halfnotes:
-    halfnotesdata = json.load(halfnotes)   
+    halfnotesdata = json.load(halfnotes)
 
 hey_msg = ['Hi','Hello','Hey']
 user_name = ['Musician','Composer']
@@ -45,12 +49,15 @@ convert_select.add('Choose','Type')
 convert_scale_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 convert_scale_select.add('C','C#','D','D#','E','F','F#','G','G#','A','A#','B')
 suggestions_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+pitch_finder_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+pitch_finder_select.add('Select_from_storage','Record_now')
 
 commands = {'start':'Restart bot',
 			'carnatic':'Search Carnatic ragas and swaras',
             'western':'Search Western Scales and chords',
             'convert':'Convert Carnatic notes to Western notes',
             'source':'Source code of me',
+            'pitch_finder':'Find pinch of a song',
             'help':'Help',
 			'all':'List all commands',
             'about':'About me'}
@@ -87,7 +94,7 @@ def get_user_step(uid):
         userStep[uid] = 0
         print("New user detected")
         return 0
-    
+
 #console output-print new user data in console
 def listener(messages):
 	for m in messages:
@@ -106,12 +113,12 @@ def command_all(m):
         text += commands[key] + "\n\n"
     bot.send_message(m.chat.id,text)
 
-#show about    
+#show about
 @bot.message_handler(commands=['about'])
 def handle_about(m):
     bot.send_chat_action(m.chat.id,'typing')
     note = "`Rhythm` is a open source chatbot designed to assist users in finding `Western(Scales and Chords)` & `Carnatic(Ragas and Swaras)` notes and convertion easily."
-    note += "It was created out of a love and passion for both `music` and `coding`." 
+    note += "It was created out of a love and passion for both `music` and `coding`."
     note += "If you encounter any issues or have suggestions for improvements,"
     note += "please type /source for navigate to source code in github.\n"
     #note += "This project is inspired from [lpadukana/karnatic-music](https://github.com/lpadukana/karnatic-music) project"
@@ -144,7 +151,7 @@ def handle_help(m):
         text += "\n\n\nContact Developer 👨‍💻: @love_in_tom"
         bot.reply_to(m,text)
 
-#show start 
+#show start
 @bot.message_handler(commands=['start'])
 def command_start(m):
 	cid = m.chat.id
@@ -152,8 +159,8 @@ def command_start(m):
 		knownUsers.append(cid)
 		userStep[cid] = 0
 	handle_help(m)
-        
-#search carnatic 
+
+#search carnatic
 @bot.message_handler(commands=['carnatic'])
 def command_searchRaga(m):
     cid = m.chat.id
@@ -174,6 +181,15 @@ def command_convert(m):
     bot.send_message(cid,"Now you have two choice\n1.Choose a raga from Database\n2.Type your own ragas/swaras")
     bot.send_message(cid, "what do you want ?",reply_markup=convert_select)
     userStep[cid] = 'convert'
+
+#pitch_finder
+@bot.message_handler(commands=['pitch_finder'])
+def command_pitch_finder(m):
+    cid = m.chat.id
+    bot.send_message(cid,"Find pitch of a song or instrument tuning (beta stage)")
+    bot.send_message(cid,"what do you want ?",reply_markup=pitch_finder_select)
+    userStep[cid] = 'pitch_finder'
+
 #--------------------------------Custom keyboard functions-------------------------#
 #--------------------------------------Western Notes-------------------------------#
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western')
@@ -183,18 +199,18 @@ def msg_western_select(m):
     bot.send_chat_action(cid, 'typing')
     userQuery = m.text.lower()
     if userQuery == 'scales':
-        tsearch = 'Enter which scales u want to know' 
+        tsearch = 'Enter which scales u want to know'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'western_scale_search'
 
     elif userQuery == 'chords':
-        tsearch = 'Enter which chords u want to search' 
+        tsearch = 'Enter which chords u want to search'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'western_chord_search'
     else:
         bot.send_message(cid,"Invalid Commmands")
 
-#[value == western_scale_search]    
+#[value == western_scale_search]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western_scale_search')
 def handle_user_scale_query(m):
     try:
@@ -210,22 +226,22 @@ def handle_user_scale_query(m):
             text += "*Natural Minor Scale*: "
             text += str(new_dict[userQuery]['minor_scale_natural']) + "\n"
             text += "\n"
-            text += "*Melodic Minor Scale*: \n"        
+            text += "*Melodic Minor Scale*: \n"
         if "minor_scale_melodic_ascending" in new_dict[userQuery]:
             text += "Ascending: "
-            text += str(new_dict[userQuery]['minor_scale_melodic_ascending']) + "\n"   
+            text += str(new_dict[userQuery]['minor_scale_melodic_ascending']) + "\n"
             text += "Descending: "
             text += str(new_dict[userQuery]['minor_scale_melodic_descending']) + "\n"
             text += "\n"
-            text += "*Harmonic Minor Scale*: \n"                
+            text += "*Harmonic Minor Scale*: \n"
         if "minor_scale_harmonic_ascending" in new_dict[userQuery]:
             text += "Ascending: "
             text += str(new_dict[userQuery]['minor_scale_harmonic_ascending']) + "\n"
             text += "Descending: "
-            text += str(new_dict[userQuery]['minor_scale_harmonic_descending']) + "\n"      
+            text += str(new_dict[userQuery]['minor_scale_harmonic_descending']) + "\n"
 
         bot.send_message(m.chat.id,text,parse_mode="Markdown")
-	    
+
     except Exception as e:
         bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Western scale mode\nIf you want to switch to chord click here /western and select chords")
         # Calculate the similarity score between the user input and each word in the JSON data
@@ -243,7 +259,7 @@ def handle_user_scale_query(m):
             suggestions_select.add(suggestion)
         bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
-#[value == western_chords_search]    
+#[value == western_chords_search]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western_chord_search')
 def handle_user_scale_query(m):
     try:
@@ -256,10 +272,10 @@ def handle_user_scale_query(m):
             text += new_dict[userQuery]['major_chord'] + "\n"
         if "minor_chord" in new_dict[userQuery]:
             text += "Minor Chord : "
-            text += str(new_dict[userQuery]['minor_chord']) + "\n"        
+            text += str(new_dict[userQuery]['minor_chord']) + "\n"
 
         bot.send_message(m.chat.id,text)
-	    
+
     except Exception as e:
         bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Western Scale mode\nIf you want to switch to chords click here /western and select scales")
         # Calculate the similarity score between the user input and each word in the JSON data
@@ -285,18 +301,18 @@ def msg_carnatic_select(m):
     bot.send_chat_action(cid, 'typing')
     userQuery = m.text.lower()
     if userQuery == 'carnatic-ragas':
-        tsearch = 'Enter which raga u want to search' 
+        tsearch = 'Enter which raga u want to search'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'carnatic_ragas_search'
 
     elif userQuery == 'carnatic-swaras':
-        tsearch = 'Enter which swaras u want to search' 
+        tsearch = 'Enter which swaras u want to search'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'carnatic_swaras_search'
     else:
         bot.send_message(cid,"Invalid Commmands")
 
-#[value == carnatic_raga_search]    
+#[value == carnatic_raga_search]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'carnatic_ragas_search')
 def handle_user_ragas_query(m):
     try:
@@ -309,31 +325,31 @@ def handle_user_ragas_query(m):
             text += new_dict[userQuery]['name'] + "\n"
         if "janya" in new_dict[userQuery]:
             text += "Janya: "
-            text += str(new_dict[userQuery]['janya']) + "\n"  
+            text += str(new_dict[userQuery]['janya']) + "\n"
         if "melakarta" in new_dict[userQuery]:
             text += "Melakarta: "
-            text += str(new_dict[userQuery]['melakarta']) + "\n" 
+            text += str(new_dict[userQuery]['melakarta']) + "\n"
         if "melakarta_section" in new_dict[userQuery]:
             text += "Melakarta section: "
-            text += new_dict[userQuery]['melakarta_section'] + "\n" 
+            text += new_dict[userQuery]['melakarta_section'] + "\n"
         if "raga_number" in new_dict[userQuery]:
             text += "Raga Number: "
             text += str(new_dict[userQuery]['raga_number']) + "\n"
         if "chakra" in new_dict[userQuery]:
             text += "Chakra: "
-            text += new_dict[userQuery]['chakra'] + "\n"  
+            text += new_dict[userQuery]['chakra'] + "\n"
         if "derived_from" in new_dict[userQuery]:
             text += "Derived from: "
-            text += new_dict[userQuery]['derived_from'] + "\n" 
+            text += new_dict[userQuery]['derived_from'] + "\n"
         if "scales" in new_dict[userQuery]:
             text += "Scale: \n"
             text += "Arohanam: "
-            text += new_dict[userQuery]['scales'][0]['arohanam'] + "\n" 
+            text += new_dict[userQuery]['scales'][0]['arohanam'] + "\n"
             text += "Avarohanam: "
-            text += new_dict[userQuery]['scales'][0]['avarohanam'] + "\n" 
+            text += new_dict[userQuery]['scales'][0]['avarohanam'] + "\n"
 
         bot.send_message(m.chat.id,text)
-	    
+
     except Exception as e:
         bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Raga mode\nIf you want to switch to swara click here /carnatic and select carnatic-swara")
         # Calculate the similarity score between the user input and each word in the JSON data
@@ -351,7 +367,7 @@ def handle_user_ragas_query(m):
             suggestions_select.add(suggestion)
         bot.send_message(cid, "Select any one",reply_markup=suggestions_select)
 
-#[value == carnatic_swara_search]    
+#[value == carnatic_swara_search]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'carnatic_swaras_search')
 def handle_user_swara_query(m):
     try:
@@ -379,7 +395,7 @@ def handle_user_swara_query(m):
             text += str(new_dict[userQuery]['halfsteps'])+ "\n"
 
         bot.send_message(m.chat.id,text)
-	    
+
     except Exception as e:
         bot.send_message(m.chat.id, "Search error!! Try again\nNow you are in Swara mode\nIf you want to switch to Raga click here /carnatic and select carnatic-ragas")
         # Calculate the similarity score between the user input and each word in the JSON data
@@ -405,18 +421,18 @@ def msg_convert_select(m):
     bot.send_chat_action(cid, 'typing')
     userQuery = m.text.lower()
     if userQuery == 'choose':
-        tsearch = 'Enter raga u want to convert to western notes' 
+        tsearch = 'Enter raga u want to convert to western notes'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'Choose'
 
     elif userQuery == 'type':
-        tsearch = 'Enter raga you want to convert, make sure each note was seperted by space' 
+        tsearch = 'Enter raga you want to convert, make sure each note was seperted by space'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         userStep[cid] = 'Type'
     else:
         bot.send_message(cid,"Invalid Commmands")
 
-#[value == convertion]    
+#[value == convertion]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Choose')
 def handle_convert_from_db(m):
     try:
@@ -427,7 +443,7 @@ def handle_convert_from_db(m):
         if "scales" in new_dicto[userQuery]:
             global arohanam
             arohanam = new_dicto[userQuery]['scales'][0]['arohanam']
-            global avarohanam 
+            global avarohanam
             avarohanam = new_dicto[userQuery]['scales'][0]['avarohanam']
 
             arohanam = re.findall(r'\b\w+\d*\b', arohanam)
@@ -459,23 +475,23 @@ def handle_convert_from_db(m):
     cid = m.chat.id
     userQuery = m.text.upper()
     RagaToWestern = copy_dictionary(halfnotesdata,userQuery)
-    try: 
-        text = ''                 
+    try:
+        text = ''
         text += "Scale: \n"
         text += "Arohanam: "
         for i in range(len(arohanam)):
             if arohanam[i] in RagaToWestern[userQuery]:
                 text += RagaToWestern[userQuery][arohanam[i]] + " "
-                print(RagaToWestern[userQuery][arohanam[i]]) 
+                print(RagaToWestern[userQuery][arohanam[i]])
         text += "\n"
         text += "Avarohanam: "
         for i in range(len(avarohanam)):
             if avarohanam[i] in RagaToWestern[userQuery]:
                text += RagaToWestern[userQuery][avarohanam[i]] + " "
-        text += '\n'  
+        text += '\n'
 
         bot.send_message(m.chat.id,text)
-	    
+
     except Exception as e:
         bot.send_message(cid, "error occur while converting. try again /convert")
 
@@ -491,13 +507,82 @@ def handle_convert_from_userinput(m):
         text += "Scale: \n"
         for i in range(len(userRaga)):
             if userRaga[i] in RagaToWestern:
-                text += RagaToWestern[userRaga[i]] + " " 
+                text += RagaToWestern[userRaga[i]] + " "
         text += "\n"
 
         bot.send_message(m.chat.id,text)
-	    
+
     except Exception as e:
         bot.send_message(m.chat.id, "Convertion error Try again\nPlease note- module conversion is still under development")
+
+#pitch_finder
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'pitch_finder')
+def handle_convert_from_userinput(m):
+    cid = m.chat.id
+    userQuery = m.text.lower()
+    if userQuery == 'select_from_storage':
+        tsearch = 'Select file to find the pitch - beta stage (Not implemented)'
+        bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
+        userStep[cid] = 'pitch_finder_storage'
+    elif userQuery == 'record_now':
+        tsearch = 'Record now'
+        bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
+        userStep[cid] = 'pitch_finder_record'
+    else:
+        tsearch = 'Some error occur'
+        bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
+
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'pitch_finder_storage')
+def handle_convert_from_db(m):
+    bot.send_message(m.chat.id,"select file from storage not implemented")
+    # Download the voice message
+    file_info = bot.get_file(m.voice.file_id)
+    downloaded_file = bot.download_file(file_info.file_path)
+
+    # Save the voice message as a WAV file
+    with open('recording.wav', 'wb') as f:
+        f.write(downloaded_file)
+
+    # Load the saved recording
+    audio, sr = librosa.load('recording.wav', sr=None)
+
+    # Extract pitch using Librosa
+    pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
+    pitch_idx = np.argmax(magnitudes)
+    pitch_hz = pitches[pitch_idx]
+
+    # Convert pitch to Western notes
+    pitch_note = librosa.hz_to_note(pitch_hz)
+
+    # Send the pitch information as a reply
+    reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
+    bot.send_message(m.chat.id, reply)
+
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'pitch_finder_record')
+def handle_convert_from_db(m):
+    bot.send_message(m.chat.id,"Record song for find the pitch")
+    # Download the voice message
+    file_info = bot.get_file(m.voice.file_id)
+    downloaded_file = bot.download_file(file_info.file_path)
+
+    # Save the voice message as a WAV file
+    with open('recording.wav', 'wb') as f:
+        f.write(downloaded_file)
+
+    # Load the saved recording
+    audio, sr = librosa.load('recording.wav', sr=None)
+
+    # Extract pitch using Librosa
+    pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
+    pitch_idx = np.argmax(magnitudes)
+    pitch_hz = pitches[pitch_idx]
+
+    # Convert pitch to Western notes
+    pitch_note = librosa.hz_to_note(pitch_hz)
+
+    # Send the pitch information as a reply
+    reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
+    bot.send_message(m.chat.id, reply)
 
 #welcome code
 @bot.message_handler(func=lambda message: True, content_types=['text'])
@@ -508,5 +593,5 @@ def send_welcome(m):
 			text += " "
 			text += m.from_user.first_name
 			bot.reply_to(m,text)
-                        
+
 bot.infinity_polling()
