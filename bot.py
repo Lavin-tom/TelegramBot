@@ -515,74 +515,84 @@ def handle_convert_from_userinput(m):
     except Exception as e:
         bot.send_message(m.chat.id, "Convertion error Try again\nPlease note- module conversion is still under development")
 
-#pitch_finder
+#---------------------------pitch finder----------------------------------------------
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'pitch_finder')
-def handle_convert_from_userinput(m):
+def msg_pitch_finder_select(m):
     cid = m.chat.id
+    userStep[cid] = 0
+    bot.send_chat_action(cid,'typing')
     userQuery = m.text.lower()
     if userQuery == 'select_from_storage':
         tsearch = 'Select file to find the pitch - beta stage (Not implemented)'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
-        userStep[cid] = 'pitch_finder_storage'
+        userStep[cid] = 'Storage'
+
     elif userQuery == 'record_now':
         tsearch = 'Record now'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
-        userStep[cid] = 'pitch_finder_record'
+        userStep[cid] = 'Record'
+
     else:
         tsearch = 'Some error occur'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
 
-@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'pitch_finder_storage')
-def handle_convert_from_db(m):
-    bot.send_message(m.chat.id,"select file from storage not implemented")
-    # Download the voice message
-    file_info = bot.get_file(m.voice.file_id)
-    downloaded_file = bot.download_file(file_info.file_path)
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Storage')
+def handle_pitch_finder_storage_query(m):
+    try:
+        bot.send_message(m.chat.id,"select file from storage not implemented")
+        # Download the voice message
+        file_info = bot.get_file(m.voice.file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
 
-    # Save the voice message as a WAV file
-    with open('recording.wav', 'wb') as f:
-        f.write(downloaded_file)
+        # Save the voice message as a WAV file
+        with open('recording.wav', 'wb') as f:
+            f.write(downloaded_file)
 
-    # Load the saved recording
-    audio, sr = librosa.load('recording.wav', sr=None)
+        # Load the saved recording
+        audio, sr = librosa.load('recording.wav', sr=None)
 
-    # Extract pitch using Librosa
-    pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
-    pitch_idx = np.argmax(magnitudes)
-    pitch_hz = pitches[pitch_idx]
+        # Extract pitch using Librosa
+        pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
+        pitch_idx = np.argmax(magnitudes)
+        pitch_hz = pitches[pitch_idx]
 
-    # Convert pitch to Western notes
-    pitch_note = librosa.hz_to_note(pitch_hz)
+        # Convert pitch to Western notes
+        pitch_note = librosa.hz_to_note(pitch_hz)
 
-    # Send the pitch information as a reply
-    reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
-    bot.send_message(m.chat.id, reply)
+        # Send the pitch information as a reply
+        reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
+        bot.send_message(m.chat.id, reply)
+    except Exception as e:
+        bot.send_message(m.chat.id, "File selection error - maybe coding issue")
 
-@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'pitch_finder_record')
-def handle_convert_from_db(m):
-    bot.send_message(m.chat.id,"Record song for find the pitch")
-    # Download the voice message
-    file_info = bot.get_file(m.voice.file_id)
-    downloaded_file = bot.download_file(file_info.file_path)
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'Record')
+def handle_pitch_finder_record_query(m):
+    try:
+        bot.send_message(m.chat.id,"Record song for find the pitch")
+        # Download the voice message
+        file_info = bot.get_file(m.voice.file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
 
-    # Save the voice message as a WAV file
-    with open('recording.wav', 'wb') as f:
-        f.write(downloaded_file)
+        # Save the voice message as a WAV file
+        with open('recording.wav', 'wb') as f:
+            f.write(downloaded_file)
 
-    # Load the saved recording
-    audio, sr = librosa.load('recording.wav', sr=None)
+        # Load the saved recording
+        audio, sr = librosa.load('recording.wav', sr=None)
 
-    # Extract pitch using Librosa
-    pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
-    pitch_idx = np.argmax(magnitudes)
-    pitch_hz = pitches[pitch_idx]
+        # Extract pitch using Librosa
+        pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
+        pitch_idx = np.argmax(magnitudes)
+        pitch_hz = pitches[pitch_idx]
 
-    # Convert pitch to Western notes
-    pitch_note = librosa.hz_to_note(pitch_hz)
+        # Convert pitch to Western notes
+        pitch_note = librosa.hz_to_note(pitch_hz)
 
-    # Send the pitch information as a reply
-    reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
-    bot.send_message(m.chat.id, reply)
+        # Send the pitch information as a reply
+        reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
+        bot.send_message(m.chat.id, reply)
+    except Exception as e:
+        bot.send_message(m.chat.id, "Record error - maybe coding issue")
 
 #welcome code
 @bot.message_handler(func=lambda message: True, content_types=['text'])
