@@ -5,8 +5,7 @@ from telebot import types
 from fuzzywuzzy import fuzz
 import re
 import numpy as np
-import sounddevice as sd
-import soundfile as sf
+import io
 import librosa
 
 TOKEN = open('api-key.txt').readline()
@@ -96,13 +95,12 @@ def get_user_step(uid):
         return 0
 
 #pitch_finder function
-def pitch_calculator(audio, sr, m):
+def pitch_calculator(audio, sr):
     pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
     pitch_idx = np.argmax(magnitudes)
     pitch_hz = pitches[pitch_idx]
     pitch_note = librosa.hz_to_note(pitch_hz)
-    reply = f"The pitch is {pitch_note} ({pitch_hz} Hz)"
-    bot.send_message(m.chat.id, reply)
+    return pitch_note
 
 #console output-print new user data in console
 def listener(messages):
@@ -217,6 +215,7 @@ def msg_pitch_finder_select(m):
         tsearch = 'Now you can find pitch by recording audio'
         bot.send_message(m.chat.id,tsearch,reply_markup=hideBoard)
         bot.send_message(cid, "Please record an audio message for pitch analysis.")
+        bot.register_next_step_handler(m, handle_pitch_finder_record_query)
         userStep[cid] = 'record_now'
 
     else:
@@ -240,30 +239,25 @@ def handle_pitch_finder_storage_query(m):
 @bot.message_handler(content_types=['voice'])
 def handle_pitch_finder_record_query(m):
     try:
-        bot.send_chat_action(m.chat.id, 'typing')
-        userStep[m.chat.id] = 0  # Reset the user's step
+        cid = m.chat.id
 
         # Download the voice message
         file_info = bot.get_file(m.voice.file_id)
-        downloaded_file = bot.download_file(file_info.file_path)
+        file_stream = bot.download_file(file_info.file_path)
 
-        # Save the voice message as a WAV file (You may need to adjust the file format as needed)
-        with open('audio_message.wav', 'wb') as f:
-            f.write(downloaded_file)
+        # Convert the file stream to bytes
+        audio_data = io.BytesIO(file_stream)
 
-        print("Voice message saved and file format is correct.")
-
-        # Load the saved recording
-        audio, sr = librosa.load('audio_message.wav', sr=None)
-
-        print("Audio loaded successfully.")
+        # Load the audio from memory
+        audio, sr = librosa.load(audio_data, sr=None)
 
         # Call the pitch_calculator function
-        pitch_calculator(audio, sr, m)
+        pitch_note = pitch_calculator(audio, sr)
+        reply = f"The pitch is {pitch_note}"
+        bot.send_message(cid, reply)
 
     except Exception as e:
-        bot.send_message(m.chat.id, "Error occurred. Maybe a coding issue.")
-
+        bot.send_message(cid, f"Error occurred: {str(e)}")
 
 #--------------------------------------Western Notes-------------------------------#
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'western')
